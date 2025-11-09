@@ -1,6 +1,7 @@
 package com.gagan.commerce.controller;
 
 import com.gagan.commerce.domain.Order;
+import com.gagan.commerce.domain.ShippingType;
 import com.gagan.commerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order createdOrder = orderService.createOrder(order);
+    public ResponseEntity<Order> createOrder(@RequestBody Order order, @RequestParam ShippingType shippingType) {
+        Order createdOrder = orderService.createOrder(order, shippingType);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 

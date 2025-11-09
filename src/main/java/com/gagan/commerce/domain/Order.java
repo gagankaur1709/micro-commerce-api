@@ -17,6 +17,6 @@ public class Order {
     @GeneratedValue
     private Long id;
     private String customer_name;
-    private String price;
+    private BigDecimal base_price;
     private BigDecimal total;
 }
