@@ -5,28 +5,26 @@ import com.gagan.commerce.domain.ShippingType;
 import com.gagan.commerce.exception.OrderNotFoundException;
 import com.gagan.commerce.repository.OrderRepository;
 import com.gagan.commerce.service.strategy.ShippingStrategy;
+import com.gagan.commerce.service.strategy.ShippingStrategyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final Map<ShippingType, ShippingStrategy> shippingStrategies; // Inject dependency in form of map for O(1) lookup
+    private final ShippingStrategyFactory strategyFactory;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, List<ShippingStrategy> shippingStrategies) {
+    public OrderService(OrderRepository orderRepository, ShippingStrategyFactory strategyFactory) {
         this.orderRepository = orderRepository;
-        this.shippingStrategies = shippingStrategies.stream().collect(Collectors.toMap(ShippingStrategy::getShippingStrategy, Function.identity()));
+        this.strategyFactory = strategyFactory;
     }
 
     public Order createOrder(Order order, ShippingType shippingType) {
-        ShippingStrategy strategy = shippingStrategies.get(shippingType);
+        ShippingStrategy strategy = strategyFactory.getStrategy(shippingType);
         if (strategy == null) {
             throw new IllegalArgumentException("Invalid shipping type: " + shippingType);
         }
