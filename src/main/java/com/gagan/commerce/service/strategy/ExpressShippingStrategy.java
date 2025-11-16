@@ -14,6 +14,7 @@ public abstract class ExpressShippingStrategy implements ShippingStrategy {
         BigDecimal shippingCost = calculatedCost.max(minCost);
 
         order.setBase_price(order.getBase_price().add(shippingCost));
+    
     }
 
     public ShippingType getShippingStrategy() {

@@ -19,4 +19,5 @@ public class Order {
     private String customer_name;
     private BigDecimal base_price;
     private BigDecimal total;
+    private String zipCode;
 }
