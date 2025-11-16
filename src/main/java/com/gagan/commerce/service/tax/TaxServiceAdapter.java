@@ -11,8 +11,8 @@ public class TaxServiceAdapter implements TaxService{
 
     private final LegacyTaxCalculator legacyCalculator;
 
-    public TaxServiceAdapter(LegacyTaxCalculator legacyCalculator) {
-        this.legacyCalculator = legacyCalculator;
+    public TaxServiceAdapter() {
+        this.legacyCalculator = new LegacyTaxCalculator();
     }
 
     @Override
